@@ -1,0 +1,7 @@
+{
+  "name": "final_odev",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
