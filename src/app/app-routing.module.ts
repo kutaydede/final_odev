@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { LocationPage } from './location/location.page';
+
 
 const routes: Routes = [
   {
@@ -11,6 +13,20 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'modal',
+    loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
+  }, 
+  {
+    path:'location',
+    component:LocationPage
+  },
+  {
+    path: 'konum',
+    loadChildren: () => import('./konum/konum.module').then( m => m.KonumPageModule)
+  },
+  
+ 
 ];
 
 @NgModule({
