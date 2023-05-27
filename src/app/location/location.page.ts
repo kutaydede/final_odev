@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { Geolocation  } from '@awesome-cordova-plugins/geolocation/ngx';
+import { ModalController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-location',
@@ -8,15 +10,13 @@ import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 })
 export class LocationPage {
 
-  latitude: number=0;
-  longitude: number=0;
-  distance: number=0;
-
-  constructor(private geolocation: Geolocation) {}
-  
-
+  latitude:any;
+  longitude: any;
+  distance: any;
+  currentLocation: string | undefined ;
+  constructor(private geolocation: Geolocation,private modalCtrl : ModalController) {}
   hesapla() {
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition().then((resp: GeolocationPosition) => {
       const currentLatitude = resp.coords.latitude;
       const currentLongitude = resp.coords.longitude;
       const distance = this.AradakiMesafeyihesapla(
@@ -26,9 +26,13 @@ export class LocationPage {
         this.longitude
       );
       this.distance = distance;
+  
+      // Mevcut konumu daha büyük noktalı bir şekilde currentLocation değişkenine ata
+      this.currentLocation = `${currentLatitude.toFixed(8)}, ${currentLongitude.toFixed(8)}`;
     });
   }
-
+  
+  
   AradakiMesafeyihesapla(lat1: number, lon1: number, lat2: number, lon2: number) {
     // İki nokta arasındaki mesafeyi hesaplamak için Haversine formül uygulaması
     const R = 6371; // Dünyanın kilometre cinsinden yarıçapı
@@ -47,5 +51,8 @@ export class LocationPage {
   deg2rad(deg: number):number {
     return deg * (Math.PI / 180);
 
+  }
+  close(){
+    this.modalCtrl.dismiss()
   }
 }

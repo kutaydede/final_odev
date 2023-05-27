@@ -21,10 +21,7 @@ const routes: Routes = [
     path:'location',
     component:LocationPage
   },
-  {
-    path: 'konum',
-    loadChildren: () => import('./konum/konum.module').then( m => m.KonumPageModule)
-  },
+  
   
  
 ];
